@@ -6,5 +6,7 @@ node_modules
 *tokens
 .wwebjs*
 
+/src/database/images/*
+
 *.log
 *qr.png
