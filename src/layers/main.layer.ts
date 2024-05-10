@@ -6,9 +6,10 @@ import { conversationFlow } from "~/flows/conversation";
 import { getHistoryParse, handleHistory } from "~/utils/handleHistory";
 import { replaceOnlyHistory } from "~/utils/parsePrompt";
 import { orderFlow } from "~/flows/order";
+import { cancelFlow } from "~/flows/cancel";
 
 export default new StructLayer(z.object({
-  intention: z.enum(["ORDENAR", "CONVERSAR"])
+  intention: z.enum(["CONVERSAR", "ORDENAR", "CANCELAR"])
 }).describe('analizaras la intencion del usuario'), 
 { 
   modelName: "openai", 
@@ -18,7 +19,7 @@ export default new StructLayer(z.object({
   } 
 }).createCallback(async (ctx, { provider, gotoFlow, state }) => {
     const history = getHistoryParse(state);
-    await handleHistory({ role: 'user', content: ctx.body }, state)
+    // await handleHistory({ role: 'user', content: ctx.body }, state)
     const prompt = replaceOnlyHistory(INTENTION_PROMPT, history)
     const intention = ctx?.schema?.intention
     console.log('**intentionMAINLAYER***',{ intention })
@@ -29,8 +30,12 @@ export default new StructLayer(z.object({
         return gotoFlow(conversationFlow)
       }
       if (intention === 'ORDENAR') {
-        console.log('Nos fuimos a ordenarr')
+        console.log('Nos fuimos a ORDENAR')
         return gotoFlow(orderFlow)
+      }
+      if (intention === 'CANCELAR') {
+        console.log('Nos fuimos a CANCELAR')
+        return gotoFlow(cancelFlow)
       }
     } catch (err) {
       console.error('[ERROR]: ', err)

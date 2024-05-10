@@ -1,5 +1,7 @@
 import { EVENTS, addKeyword } from "@builderbot/bot";
+import conversationalLayer from "~/layers/conversational.layer";
 import mainLayer from "~/layers/main.layer";
 
 export default addKeyword(EVENTS.WELCOME)
-	.addAction(mainLayer);
+.addAction(conversationalLayer)
+.addAction(mainLayer);

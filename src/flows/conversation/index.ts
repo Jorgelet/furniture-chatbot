@@ -12,7 +12,6 @@ const conversationFlow = addKeyword(EVENTS.ACTION).addAction(async (_, {state, f
   try {
     const ai = extensions.ai as AIClass
     const history = getHistoryParse(state)
-    console.log('history', history)
     const prompt = replacePromptWithInfo(PROMPT_CONVERSATION, history)
     const text = await ai.createChat([
       {
@@ -37,19 +36,24 @@ const conversationFlow = addKeyword(EVENTS.ACTION).addAction(async (_, {state, f
     return console.error('[ERROR]: ', error)
   }
 })
-// .addAction({capture: true},
-//   new StructLayer(z.object({
-//     intention: z.enum(["CONVERSAR", "ORDENAR"])
-//   }).describe('te encargaras de seguir el hilo para saber que intencion quiere la persona, de entender que quiere ordenar, dilo, ese es tu objetivo')).createCallback(async (ctx, { gotoFlow, fallBack, state }) => {
-//     const intention = ctx?.schema?.intention;
+.addAction({capture: true},
+  new StructLayer(z.object({
+    intention: z.enum(["CONVERSAR", "ORDENAR", "CANCELAR"])
+  })).createCallback(async (ctx, { gotoFlow, state }) => {
+    const intention = ctx?.schema?.intention;
 
-//     console.log('***INTENTION1***', intention)
-//     if (intention === 'CONVERSAR') {
-//       return gotoFlow(conversationFlow)
-//     } else if (intention === 'ORDENAR') {
-//       return gotoFlow(orderFlow)
-//     } 
-//   })
-// )
+    await handleHistory({ role: 'user', content: ctx.body }, state)
+    
+    console.log('***INTENTION_CONVERSATION***', intention)
+
+    if (intention === 'CONVERSAR' || intention == undefined) {
+      return gotoFlow(conversationFlow)
+    } else if (intention === 'ORDENAR') {
+      return gotoFlow(orderFlow)
+    } else {
+      return gotoFlow(conversationFlow)
+    }
+  })
+)
 
 export { conversationFlow }
