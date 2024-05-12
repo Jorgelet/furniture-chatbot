@@ -1,19 +1,17 @@
+import z from "zod";
 import { EVENTS, addKeyword } from "@builderbot/bot";
-import AIClass from "~/ai/ai.class";
-import { replacePromptWithInfo } from "~/utils/parsePrompt";
-import { PROMPT_ORDER } from "./prompt";
-import { getHistoryParse, handleHistory } from "~/utils/handleHistory";
 import { StructLayer } from "@elimeleth/builderbot-langchain";
-import { z } from "zod";
-import { conversationFlow } from "../conversation";
-import mainLayer from "~/layers/main.layer";
-import { cancelFlow } from "../cancel";
-import { registerFlow } from "./register.flow";
 
+import { cancelFlow } from "../cancel";
+import { PROMPT_ORDER } from "./prompt";
+import AIClass from "~/services/OpenAIService";
+import { registerFlow } from "./register.flow";
+import { replacePromptWithInfo } from "~/utils/parsePrompt";
+import { getHistoryParse, handleHistory } from "~/utils/handleHistory";
 
 
 export const orderFlow = addKeyword(EVENTS.ACTION)
-.addAction(async (ctx, { state, flowDynamic, extensions, globalState }) => {
+.addAction(async (_, { state, flowDynamic, extensions }) => {
   try {
     const ai = extensions.ai as AIClass;
     const history = getHistoryParse(state);
@@ -41,6 +39,9 @@ export const orderFlow = addKeyword(EVENTS.ACTION)
 .addAction({ capture: true }, new StructLayer(z.object({
   intention: z.enum(["CONVERSAR", "ORDENAR", "CANCELAR"])
 })).createCallback(async (ctx, { gotoFlow }) => {
+  
   const intention = ctx?.schema?.intention;
- if(intention === 'CANCELAR') return gotoFlow(cancelFlow)
+  if(intention === 'CANCELAR') return gotoFlow(cancelFlow)
+    
+  return gotoFlow(registerFlow)
 }), [registerFlow]) 

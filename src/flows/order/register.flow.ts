@@ -1,38 +1,43 @@
-import { MemoryDB, addKeyword } from "@builderbot/bot";
+import { EVENTS, MemoryDB, addKeyword } from "@builderbot/bot";
 import { BaileysProvider } from "@builderbot/provider-baileys";
 
+import { clearHistory } from "~/utils/handleHistory";
 import { addClient, phoneNumbers } from "~/services/SheetService";
 
-export const registerFlow = addKeyword<BaileysProvider, MemoryDB>(['Comprar'])
-.addAnswer('Claro para proceder con la compra y coordinar la entrega necesitaria confirmar tus datos')
-.addAnswer('¿Cuál mueble le interesaba?', { capture: true }, async(ctx, { state } ) => {
-  await state.update({ product: ctx.body });
-})
+export const registerFlow = addKeyword<BaileysProvider, MemoryDB>(EVENTS.ACTION)
+.addAnswer('Listo para comenzar con la cotización de su mueble personalizado, por favor ayudeme con los siguientes datos')
 .addAnswer('¿Cuál es su nombre y apellido?', { capture: true }, async(ctx, { state }) => {
   await state.update({ name: ctx.body });
-})
-.addAnswer('¿Cuál es su número de teléfono?', { capture: true }, async(ctx, { state }) => {
-  await state.update({ phone: ctx.body });
 })
 .addAnswer('¿Cuál es su dirección?', { capture: true }, async(ctx, { state }) => {
   await state.update({ address: ctx.body });
 })
-.addAction(async(ctx, { provider, state }) => {
-  const product = state.get('product');
+.addAnswer('¿Cuál es su email?', { capture: true }, async(ctx, { state }) => {
+  await state.update({ email: ctx.body });
+})
+.addAnswer('¿Cuál es su cedula?', { capture: true }, async(ctx, { state }) => {
+  await state.update({ dni: ctx.body });
+})
+.addAnswer('Gracias, pronto un miembro de nuestro equipo se contactara con usted para aclarar cualquier duda que tenga', 
+null, 
+async(_, { provider, state }) => {
   const name = state.get('name');
-  const phone = state.get('phone');
-  const address = state.get('address');  
-
-  const text = `El cliente ${name} esta interesado en ${product} y desea comprarlo, sus datos son: 
-  Nombre: ${name} 
-  Telefono: ${phone} 
-  Direccion: ${address} 
-  Por favor contactar con el cliente lo antes posible para coordinar la entrega.`
+  const address = state.get('address');
+  const email = state.get('email');
+  const dni = state.get('dni');
   
-  await addClient(name, phone, address, product);
+  const text = `Nuevo cliente:
+  Nombre: ${name}
+  Dirección: ${address}
+  Email: ${email}
+  Cedula: ${dni}
+  `;
+
+  await addClient(name, address, email, dni);
 
   for(const number of phoneNumbers){
     provider.sendText(number.concat('@s.whatsapp.net'), text)
-    provider.sendMessage(number.concat('@s.whatsapp.net'), text, {})
   }
+
+  clearHistory(state)
 })

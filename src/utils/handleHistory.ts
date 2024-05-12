@@ -1,11 +1,11 @@
 import {  BotStateStandAlone } from "@builderbot/bot/dist/types";
 
-export type History = { 
+type History = { 
   role: "user" | "assistant"; 
   content: string 
 };
 
-export function getHistoryParse (_state: BotStateStandAlone, k = 13): string {
+function getHistoryParse (_state: BotStateStandAlone, k = 13): string {
   const history = _state.get<History[]>('history') ?? [];
   const limitHistory = history.slice(-k);
   return limitHistory.reduce((prev, current) => {
@@ -16,9 +16,14 @@ export function getHistoryParse (_state: BotStateStandAlone, k = 13): string {
   }, ``)
 } 
 
-export async function handleHistory  (inside: History, _state: BotStateStandAlone) {
+async function handleHistory  (inside: History, _state: BotStateStandAlone) {
   const history = _state.get<History[]>('history') ?? [];
   history.push(inside);
-
   await _state.update({history})
 }
+
+async function clearHistory (_state: BotStateStandAlone) {
+  _state.clear()
+}
+
+export { History, getHistoryParse, handleHistory, clearHistory}

@@ -12,19 +12,20 @@ const serviceAccountAuth = new JWT({
   ] 
 })
 
-const doc = new GoogleSpreadsheet('15rf6Q-wZ7ZWrBeuhHDw9o7yQ4_5M_8hctNHN9KWw-_U', serviceAccountAuth);
+const doc = new GoogleSpreadsheet(process.env.SPREADSHEET_ID, serviceAccountAuth);
 await doc.loadInfo();
 
-const sheet = doc.sheetsByIndex[0]; // or use `doc.sheetsById[id]` or `doc.sheetsByTitle[title]`
+const sheet = doc.sheetsByIndex[0];
 const clientSheet = doc.sheetsByIndex[1];
-const rows = await sheet.getRows(); // can pass in { limit, offset }
+const rows = await sheet.getRows();
 
-export const phoneNumbers: string[] = [];
-
+const phoneNumbers: string[] = [];
 for(const row of rows) {
   phoneNumbers.push(row.get('Numeros'));
 }
 
-export async function addClient(Nombre:string, Telefono:string, Direccion:string, Producto:string) {
-  await clientSheet.addRow({ Nombre, Telefono, Direccion, Producto });
+async function addClient(Nombre:string, Direccion:string, Email:string, Cedula:string) {
+  await clientSheet.addRow({ Nombre, Direccion, Email, Cedula });
 }
+
+export { phoneNumbers, addClient } 

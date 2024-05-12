@@ -2,7 +2,7 @@ import OpenAI from "openai";
 import { EventEmitter } from "node:events";
 import { ChatCompletionMessageParam } from "openai/resources/chat";
 
-const OPEN_AI_MODEL = process.env.OPEN_AI_MODEL ?? "gpt-3.5-turbo"; //gpt-3.5-turbo
+const OPEN_AI_MODEL = process.env.OPEN_AI_MODEL ?? "gpt-3.5-turbo";
 
 class AIClass extends EventEmitter {
 	private openai: OpenAI;
