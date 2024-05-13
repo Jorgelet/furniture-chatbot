@@ -1,24 +1,25 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-export async function crumpJump(rutaCarpeta: string): Promise<void> {
+export async function crumpJump(rutaArchivo: string): Promise<void> {
   try {
+    const rutaCarpeta = path.dirname(rutaArchivo);
     const archivos = await fs.readdir(rutaCarpeta);
     const fechaLimite = new Date();
     fechaLimite.setDate(fechaLimite.getDate() - 1);
 
     await Promise.all(archivos.map(async (archivo) => {
-      const rutaArchivo = path.join(rutaCarpeta, archivo);
-      const stats = await fs.stat(rutaArchivo);
+      const rutaCompleta = path.join(rutaCarpeta, archivo);
+      const stats = await fs.stat(rutaCompleta);
       if (stats.isFile()) {
         const fechaCreacion = stats.birthtime;
         if (fechaCreacion < fechaLimite) {
-          await fs.unlink(rutaArchivo);
-          console.log(`Archivo eliminado: ${rutaArchivo}`);
+          await fs.unlink(rutaCompleta);
+          console.log(`Archivo eliminado: ${rutaCompleta}`);
         }
       }
     }));
   } catch (error) {
-    console.error(`Error al eliminar archivos antiguos de la carpeta ${rutaCarpeta}: ${error}`);
+    console.error(`Error al eliminar el archivo ${rutaArchivo}: ${error}`);
   }
 }

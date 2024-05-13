@@ -7,6 +7,7 @@ import AIClass from "~/services/OpenAIService";
 import { PROMPT_CONVERSATION } from "./prompt";
 import { replacePromptWithInfo } from "~/utils/parsePrompt";
 import { getHistoryParse, handleHistory } from "~/utils/handleHistory";
+import { cancelFlow } from "../cancel";
 
 const conversationFlow = addKeyword(EVENTS.ACTION).addAction(async (_, { state, flowDynamic, extensions }) => {
   try {
@@ -44,11 +45,9 @@ const conversationFlow = addKeyword(EVENTS.ACTION).addAction(async (_, { state, 
     
     console.log('***INTENTION_CONVERSATION***', intention)
 
-    if (intention === 'ORDENAR') {
-      return gotoFlow(orderFlow)
-    } else {
-      return gotoFlow(conversationFlow)
-    }
+    if (intention === 'ORDENAR') { return gotoFlow(orderFlow) }
+    else if (intention === 'CANCELAR') { return gotoFlow(cancelFlow) }
+    else { return gotoFlow(conversationFlow) }  
   })
 )
 

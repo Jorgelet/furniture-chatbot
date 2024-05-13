@@ -23,6 +23,7 @@ export default new StructLayer(z.object({
     const prompt = replaceOnlyHistory(INTENTION_PROMPT, history)
     const intention = ctx?.schema?.intention
 
+    console.log('INTENTION_MAIN_LAYER: ', intention)
     await typing(ctx, provider)
     try {
       if (intention === 'ORDENAR') {

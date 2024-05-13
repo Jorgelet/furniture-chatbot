@@ -2,10 +2,11 @@ import z from "zod";
 import { EVENTS, addKeyword } from "@builderbot/bot";
 import { StructLayer } from "@elimeleth/builderbot-langchain";
 
+import { mediaFlow } from "../media";
 import { cancelFlow } from "../cancel";
 import { PROMPT_ORDER } from "./prompt";
 import AIClass from "~/services/OpenAIService";
-import { registerFlow } from "./register.flow";
+import { conversationFlow } from "../conversation";
 import { replacePromptWithInfo } from "~/utils/parsePrompt";
 import { getHistoryParse, handleHistory } from "~/utils/handleHistory";
 
@@ -39,9 +40,11 @@ export const orderFlow = addKeyword(EVENTS.ACTION)
 .addAction({ capture: true }, new StructLayer(z.object({
   intention: z.enum(["CONVERSAR", "ORDENAR", "CANCELAR"])
 })).createCallback(async (ctx, { gotoFlow }) => {
-  
   const intention = ctx?.schema?.intention;
-  if(intention === 'CANCELAR') return gotoFlow(cancelFlow)
-    
-  return gotoFlow(registerFlow)
-}), [registerFlow]) 
+  
+  console.log('INTENTION_ORDER_FLOW: ', intention)
+  
+  if(intention === 'CANCELAR') {return gotoFlow(cancelFlow)}
+  else if(intention === 'CONVERSAR') {return gotoFlow(conversationFlow)}
+  return gotoFlow(mediaFlow)
+})) 
