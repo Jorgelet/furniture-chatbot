@@ -44,7 +44,7 @@ export const orderFlow = addKeyword(EVENTS.ACTION)
   
   console.log('INTENTION_ORDER_FLOW: ', intention)
   
-  if(intention === 'CANCELAR') {return gotoFlow(cancelFlow)}
-  else if(intention === 'CONVERSAR') {return gotoFlow(conversationFlow)}
-  return gotoFlow(mediaFlow)
+  if(intention === 'CANCELAR') { return gotoFlow(cancelFlow) }
+  else if(intention === 'CONVERSAR') { return gotoFlow(conversationFlow) }
+  else { return gotoFlow(mediaFlow) }
 })) 

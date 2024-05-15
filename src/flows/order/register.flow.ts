@@ -1,14 +1,12 @@
-import { EVENTS, MemoryDB, addKeyword } from "@builderbot/bot";
 import { BaileysProvider } from "@builderbot/provider-baileys";
+import { EVENTS, MemoryDB, addKeyword } from "@builderbot/bot";
 
 import { clearHistory } from "~/utils/handleHistory";
 import { addClient, phoneNumbers } from "~/services/SheetService";
 
+
 export const registerFlow = addKeyword<BaileysProvider, MemoryDB>(EVENTS.ACTION)
-.addAnswer([
-  'Perfecto! hemos recibido la imagen',
-  '¿listo para empezar la toma de datos?'
-], {capture: true})
+.addAnswer('Perfecto! Ahora vamos a comenzar con la toma de datos ✍️')
 .addAnswer('¿Cuál es su nombre y apellido?', { capture: true }, async(ctx, { state }) => {
   await state.update({ name: ctx.body });
 })
@@ -21,7 +19,7 @@ export const registerFlow = addKeyword<BaileysProvider, MemoryDB>(EVENTS.ACTION)
 .addAnswer('¿Cuál es su cedula?', { capture: true }, async(ctx, { state }) => {
   await state.update({ dni: ctx.body });
 })
-.addAnswer('Gracias, pronto un miembro de nuestro equipo se contactara con usted para aclarar cualquier duda que tenga', 
+.addAnswer('Gracias, pronto un miembro de nuestro equipo se contactara con usted para aclarar cualquier duda que tenga 🤗', 
 null, 
 async(_, { provider, state }) => {
   const name = state.get('name');

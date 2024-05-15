@@ -1,7 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
-export async function crumpJump(rutaArchivo: string): Promise<void> {
+export async function cronJob(rutaArchivo: string): Promise<void> {
   try {
     const rutaCarpeta = path.dirname(rutaArchivo);
     const archivos = await fs.readdir(rutaCarpeta);
