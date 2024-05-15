@@ -28,7 +28,7 @@ export const mediaFlow = addKeyword<BaileysProvider>(EVENTS.MEDIA)
   await queue.clearQueue('processImage');
   queue.clearAndDone('processImage', {fingerIdRef: 'imageProcessingTask'});
 })
-.addAction(async (_, { extensions, provider, flowDynamic, gotoFlow, fallBack, endFlow }) => {
+.addAction(async (_, { extensions, provider, gotoFlow, endFlow }) => {
 
   const ai = extensions.ai as AIClass;
   
@@ -51,9 +51,8 @@ export const mediaFlow = addKeyword<BaileysProvider>(EVENTS.MEDIA)
       provider.sendImage(number.concat('@s.whatsapp.net'), localPath, 'El cliente quiere saber el precio de este mueble');
       crumpJump(localPath);
     }
-  }
+  }  
   
-  await flowDynamic('Perfecto ahora vamos a necesitar que nos proporciones algunos datos para continuar con el proceso de cotizacion')
   localPaths.length = 0;
   console.log('FINALLL')
   return gotoFlow(registerFlow)

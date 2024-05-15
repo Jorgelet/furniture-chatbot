@@ -5,7 +5,10 @@ import { clearHistory } from "~/utils/handleHistory";
 import { addClient, phoneNumbers } from "~/services/SheetService";
 
 export const registerFlow = addKeyword<BaileysProvider, MemoryDB>(EVENTS.ACTION)
-.addAnswer('Listo para comenzar con la cotización de su mueble personalizado, por favor ayudeme con los siguientes datos')
+.addAnswer([
+  'Perfecto! hemos recibido la imagen',
+  '¿listo para empezar la toma de datos?'
+], {capture: true})
 .addAnswer('¿Cuál es su nombre y apellido?', { capture: true }, async(ctx, { state }) => {
   await state.update({ name: ctx.body });
 })
