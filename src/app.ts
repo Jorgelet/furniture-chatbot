@@ -8,22 +8,22 @@ import AIClass from './services/OpenAIService';
 
 process.loadEnvFile();
 
-const ai = new AIClass(process.env.OPENAI_API_KEY);
-const PORT = process.env.PORT ?? 3000;
+const ai = new AIClass(process.env.OPENAI_API_KEY); // Aqui se crea una instancia del servicio de OpenAI
+const PORT = process.env.PORT ?? 3000; // Aqui se indica el puerto en el que se ejecutará el servidor HTTP
 
 async function main() {
 	const { httpServer, handleCtx } = await createBot(
 		{
-			provider,
-			flow,
-			database,
+			provider, // Aqui te conectas con el proveedor que puede ser Meta, Twilio, Baileys, etc.
+			flow, // Aqui se definen todos los flujos de conversación que tendrá tu bot
+			database, // Aqui se define la base de datos que usará tu bot que puede ser Mongo, Memory, etc.
 		},
 		{
-			queue: {
+			queue: { 
 				timeout: 20000,
 				concurrencyLimit: 50
 			},
-			extensions: {
+			extensions: { // Aqui usas las extensiones que necesites en este caso el servicio de OpenAI
 				ai,
 			},
 		}
@@ -36,7 +36,7 @@ async function main() {
 		return res.end('sended');
 	}));
 
-	httpServer(+PORT);
+	httpServer(+PORT); // Aqui se inicia el servidor HTTP
 }
 
 main();

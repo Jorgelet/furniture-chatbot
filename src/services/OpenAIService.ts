@@ -4,6 +4,7 @@ import { ChatCompletionMessageParam } from "openai/resources/chat";
 
 const OPEN_AI_MODEL = process.env.OPEN_AI_MODEL ?? "gpt-3.5-turbo";
 
+// Esta clase se encarga de manejar las peticiones a OpenAI
 class AIClass extends EventEmitter {
 	private openai: OpenAI;
 	constructor(apiKey: string) {

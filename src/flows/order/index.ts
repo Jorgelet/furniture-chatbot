@@ -11,6 +11,7 @@ import { replacePromptWithInfo } from "~/utils/parsePrompt";
 import { getHistoryParse, handleHistory } from "~/utils/handleHistory";
 
 
+// Este flow se encarga de manejar la orden del usuario
 export const orderFlow = addKeyword(EVENTS.ACTION)
 .addAction(async (_, { state, flowDynamic, extensions }) => {
   try {

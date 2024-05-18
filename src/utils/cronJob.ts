@@ -1,6 +1,7 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 
+// Esta funcion se encarga de eliminar los archivos/imagenes que tengan mas de un dia de antiguedad guardada en la base de datos
 export async function cronJob(rutaArchivo: string): Promise<void> {
   try {
     const rutaCarpeta = path.dirname(rutaArchivo);

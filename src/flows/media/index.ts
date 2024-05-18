@@ -25,7 +25,6 @@ export const mediaFlow = addKeyword<BaileysProvider>(EVENTS.MEDIA)
     localPaths.push(localPath);
   }, 'imageProcessingTask');
 
-  console.log('LocalPaths', localPaths);
   await queue.processQueue('processImage');
   await queue.clearQueue('processImage');
   queue.clearAndDone('processImage', {fingerIdRef: 'imageProcessingTask'});
@@ -34,11 +33,9 @@ export const mediaFlow = addKeyword<BaileysProvider>(EVENTS.MEDIA)
 
   if(debouncedEndFlow === undefined || debouncedEndFlow === null){
     debouncedEndFlow = debounce(endFlow, 1500);
-    console.log('HOLAAA ENDFLOW')
   }
   if (debouncedGoToFlow === undefined || debouncedGoToFlow === null) {
     debouncedGoToFlow = debounce(gotoFlow, 1500);
-    console.log('HOLAAA GOTOFlOW')
   }
   
   const ai = extensions.ai as AIClass;
@@ -57,14 +54,13 @@ export const mediaFlow = addKeyword<BaileysProvider>(EVENTS.MEDIA)
     }   
   }
 
-  // for(const localPath of localPaths) {
-  //   for(const number of phoneNumbers) {
-  //     provider.sendImage(number.concat('@s.whatsapp.net'), localPath, 'El cliente quiere saber el precio de este mueble');
-  //     cronJob(localPath);
-  //   }
-  // }  
+  for(const localPath of localPaths) {
+    for(const number of phoneNumbers) {
+      provider.sendImage(number.concat('@s.whatsapp.net'), localPath, 'El cliente quiere saber el precio de este mueble');
+      cronJob(localPath);
+    }
+  }  
   
   localPaths.length = 0;
-  console.log('FINALLL')
   return debouncedGoToFlow(registerFlow)
 })

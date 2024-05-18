@@ -9,6 +9,7 @@ import { replacePromptWithInfo } from "~/utils/parsePrompt";
 import { getHistoryParse, handleHistory } from "~/utils/handleHistory";
 import { cancelFlow } from "../cancel";
 
+// Este flow se encarga de manejar la conversación con el usuario
 const conversationFlow = addKeyword(EVENTS.ACTION).addAction(async (_, { state, flowDynamic, extensions }) => {
   try {
     const ai = extensions.ai as AIClass;

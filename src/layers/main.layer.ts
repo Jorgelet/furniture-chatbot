@@ -9,6 +9,8 @@ import { conversationFlow } from "~/flows/conversation";
 import { getHistoryParse } from "~/utils/handleHistory";
 import { replaceOnlyHistory } from "~/utils/parsePrompt";
 
+
+// Este es el layer principal que se encarga de analizar la intencion del usuario
 export default new StructLayer(z.object({
   intention: z.enum(["CONVERSAR", "ORDENAR", "CANCELAR"])
 }).describe('analizaras la intencion del usuario'), 

@@ -1,44 +1,51 @@
-<p align="center">
-  <a href="https://builderbot.vercel.app/">
-    <picture>
-      <img src="https://builderbot.vercel.app/assets/thumbnail-vector.png" height="80">
-    </picture>
-    <h2 align="center">BuilderBot</h2>
-  </a>
-</p>
+
+![Logo](https://bakano.ec/_nuxt/bakano-logotipo-negro.inytqi86.webp)
 
 
+# Furniture BOT
 
-<p align="center">
-  <a aria-label="NPM version" href="https://www.npmjs.com/package/@builderbot/bot">
-    <img alt="" src="https://img.shields.io/npm/v/@builderbot/bot?color=%2300c200&label=%40bot-whatsapp">
-  </a>
-  <a aria-label="Join the community on GitHub" href="https://link.codigoencasa.com/DISCORD">
-    <img alt="" src="https://img.shields.io/discord/915193197645402142?logo=discord">
-  </a>
-</p>
+Este proyecto presenta una solución innovadora para negocios de muebles, un Bot de WhatsApp inteligente y altamente interactivo. Utilizando el poderoso framework ***BuilderBot***, este bot está diseñado para automatizar y optimizar las interacciones con los clientes proporcionando un servicio al cliente excepcional.
 
+El bot es capaz de procesar y responder a las consultas de los clientes. Con la capacidad de procesar imágenes, el bot puede incluso identificar muebles a través de fotos enviadas por los clientes, proporcionando una experiencia de usuario única y personalizada.
 
-## Getting Started
+Este proyecto es un ejemplo perfecto de cómo la tecnología de chatbot puede ser utilizada para mejorar y simplificar las operaciones de un negocio de muebles, proporcionando un servicio al cliente eficiente y efectivo, y liberando tiempo valioso para que el personal se concentre en otras áreas importantes del negocio.
 
-With this library, you can build automated conversation flows agnostic to the WhatsApp provider, set up automated responses for frequently asked questions, receive and respond to messages automatically, and track interactions with customers. Additionally, you can easily set up triggers to expand functionalities limitlessly.
+## Installation
 
+Instalar mi proyecto con pnpm
+
+```bash
+  pnpm install
+  cd my-project
 ```
-npm create builderbot@latest
+    
+## Deployment
+
+To deploy this project run
+
+```bash
+  pnpm run dev
 ```
+
+
+## Environment Variables
+
+Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno a su archivo .env
+
+`OPENAI_API_KEY`
+
+`ASSISTANT_ID`
+
+`SPREADSHEET_ID`
+
+`GOOGLE_SERVICE_ACCOUNT_EMAIL`
+
+`GOOGLE_PRIVATE_KEY`
+
+
+## Authors
+[@Jorgelet](https://github.com/Jorgelet)
 
 
 ## Documentation
-
-Visit [builderbot](https://builderbot.vercel.app/) to view the full documentation.
-
-
-## Official Course
-
-If you want to discover all the functions and features offered by the library you can take the course.
-[View Course](https://app.codigoencasa.com/courses/builderbot?refCode=LEIFER)
-
-
-## Contact Us
-- [💻 Discord](https://link.codigoencasa.com/DISCORD)
-- [👌 𝕏 (Twitter)](https://twitter.com/leifermendez)
+[BuilderBot](https://www.builderbot.app/en)

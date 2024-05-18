@@ -4,6 +4,7 @@ import { GoogleSpreadsheet } from "google-spreadsheet";
 
 process.loadEnvFile();
 
+// Aqui esta la logica para conectarse a la hoja de calculo de Google Sheets, obtener los numeros de telefono y agregar un cliente 
 const serviceAccountAuth = new JWT({
   email: process.env.GOOGLE_SERVICE_ACCOUNT_EMAIL,
   key: process.env.GOOGLE_PRIVATE_KEY,

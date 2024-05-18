@@ -5,6 +5,7 @@ import { clearHistory } from "~/utils/handleHistory";
 import { addClient, phoneNumbers } from "~/services/SheetService";
 
 
+// Este flow se encarga de registrar un nuevo cliente
 export const registerFlow = addKeyword<BaileysProvider, MemoryDB>(EVENTS.ACTION)
 .addAnswer('Perfecto! Ahora vamos a comenzar con la toma de datos ✍️')
 .addAnswer('¿Cuál es su nombre y apellido?', { capture: true }, async(ctx, { state }) => {
