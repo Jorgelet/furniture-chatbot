@@ -4,7 +4,7 @@
 
 # Furniture BOT
 
-Este proyecto presenta una solución innovadora para negocios de muebles, un Bot de WhatsApp inteligente y altamente interactivo. Utilizando el poderoso framework ***BuilderBot***, este bot está diseñado para automatizar y optimizar las interacciones con los clientes proporcionando un servicio al cliente excepcional.
+Este proyecto presenta una solución innovadora para negocios de muebles, un Bot de WhatsApp inteligente y altamente interactivo. Utilizando el poderoso framework ***BuilderBot*** y la api de ***OpenAI***, este bot está diseñado para automatizar y optimizar las interacciones con los clientes proporcionando un servicio al cliente excepcional.
 
 El bot es capaz de procesar y responder a las consultas de los clientes. Con la capacidad de procesar imágenes, el bot puede incluso identificar muebles a través de fotos enviadas por los clientes, proporcionando una experiencia de usuario única y personalizada.
 
@@ -48,4 +48,5 @@ Para ejecutar este proyecto, deberá agregar las siguientes variables de entorno
 
 
 ## Documentation
-[BuilderBot](https://www.builderbot.app/en)
+[BuilderBot](https://www.builderbot.app/en) <br>
+[OpenAI](https://openai.com/index/openai-api/)
